@@ -10,7 +10,7 @@
     "lint:watch":"npm run lint -- --watch",
     "start":"npm-run-all --parallel open:src lint:watch test:watch",
     "open:src":"babel-node tools/srcServer.js",
-    "test": "mocha --reporter progress tools/testSetup.js \"src/**/*.spec.js\"",
+    "test": "mocha --reporter spec tools/testSetup.js \"src/**/*.test.js\"",
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {

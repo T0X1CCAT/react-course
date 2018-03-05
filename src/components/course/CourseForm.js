@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
-import TextInput from '../common/TextInput';
+import TextInput from '../common/textInput';
 import SelectInput from '../common/SelectInput';
-import Toastr from './../../../node_modules/toastr'
+import Toastr from './../../../node_modules/toastr';
 
 const CourseForm = ({course, allAuthors, onSave, onChange, saving, errors}) => {
   return (

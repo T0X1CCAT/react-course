@@ -14,7 +14,7 @@ export default function  courseReducer(state=initialState.courses, action){
             return [
                 ...state.filter(course => course.id !== action.savedCourse.id),
                 Object.assign({}, action.savedCourse)
-            ]        
+            ];        
         default:
             return state;
     }
