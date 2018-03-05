@@ -5,9 +5,10 @@ import {bindActionCreators} from 'redux';
 import CourseList from './CourseList';
 import CourseForm from './CourseForm';
 import Toastr from './../../../node_modules/toastr';
+import {authorsFormattedDropdown} from '../../selectors/selectors';
 
 
-class ManageCoursePage extends React.Component {
+export class ManageCoursePage extends React.Component {
   constructor(props, context){
     super(props, context);
     this.state = {
@@ -30,6 +31,10 @@ class ManageCoursePage extends React.Component {
 
   saveCourse(event){
     event.preventDefault();
+
+    if (!this.courseIsValid()){
+      return;
+    }
     this.setState({saving: true});
     this.props.actions.saveCourse(this.state.course).
       then( () => this.redirect()).
@@ -54,6 +59,16 @@ class ManageCoursePage extends React.Component {
 
   }
 
+  courseIsValid(){
+    let formIsValid = true;
+    let errors = {};
+    if (this.state.course.title.length < 5){
+      errors.title = 'Title must be at least 5 characters.';
+      formIsValid = false;
+    }
+    this.setState({errors : errors});
+    return formIsValid;
+  }
   render(){
     return (
         <CourseForm course={this.state.course} 
@@ -91,16 +106,12 @@ function mapStateToProps(state, ownProps){
   if(courseId && state.courses.length > 0){
     course = getCourseById(state.courses, courseId);
   }
-  const authorsForDropdown = state.authors.map( author => {
-    return {
-      text: author.lastName,
-      value: author.id
-    };
-  });
-  return{
+
+  return {
     course: course,
-    authors:authorsForDropdown
+    authors: authorsFormattedDropdown(state.authors)
   };
+  
 }
 
 function mapDispatchToProps(dispatch){
